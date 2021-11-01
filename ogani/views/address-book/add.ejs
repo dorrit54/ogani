@@ -1,0 +1,90 @@
+<%- contentFor('css') %>
+    <style>
+    </style>
+
+    <%- contentFor('body') %>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+
+                        <div class="card-body">
+                            <h5 class="card-title">新增資料</h5>
+
+
+
+                            <form name="form1" onsubmit="checkForm(); return false;">
+                                <div class="form-group">
+                                    <label for="name">姓名</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobile">手機</label>
+                                    <input type="text" class="form-control" id="mobile" name="mobile"
+                                        pattern="09\d{2}-?\d{3}-?\d{3}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="birthday">生日</label>
+                                    <input type="date" class="form-control" id="birthday" name="birthday">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">地址</label>
+                                    <textarea class="form-control" id="address" name="address" cols="30"
+                                        rows="3"></textarea>
+
+                                </div>
+
+                                <div id="info" class="alert alert-success" role="alert" style="display: none">
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">新增</button>
+                            </form>
+
+
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+        <%- contentFor('js') %>
+            <script>
+                const info = $('#info');
+
+                function checkForm() {
+                    // TODO: 檢查資料格式
+
+                    $.post('', $(document.form1).serialize(), function (data) {
+                        console.log(data);
+                        if (data.success) {
+                            info.removeClass('alert-danger').addClass('alert-success');
+                            info.html('新增成功');
+                            info.slideDown();  // 下拉顯示
+                            // 新增成功後轉向到列表頁
+                            setTimeout(function () {
+                                location.href = '/address-book/list';
+                            }, 3000);
+                        } else {
+                            info.removeClass('alert-success').addClass('alert-danger');
+                            info.html(data.error);
+                            info.slideDown();
+                            // 新增成功後轉向到列表頁
+                            setTimeout(function () {
+                                info.slideUp(); // 上捲後隱藏
+                            }, 3000);
+                        }
+
+                    }, 'json');
+
+                }
+            </script>

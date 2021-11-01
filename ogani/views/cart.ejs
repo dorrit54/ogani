@@ -1,0 +1,86 @@
+<%- contentFor('css') %>
+<style>
+.row_product_cart h2{
+    text-align: center;
+    padding-left: 40px;
+    padding-bottom: 400px;
+    padding-top: 60px;
+}
+
+</style>
+
+<%- contentFor('body') %>
+<div class="container">
+    <div class="row_product_cart">
+    <% if(! cart.length){ %>
+        <h2 class="icon_search">逛逛商店將喜愛的商品加到購物車吧</h2>
+    <% } else { %>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">del</th>
+                    <th scope="col">商品</th>
+                    <th scope="col">品名</th>
+                    <th scope="col">價格</th>
+                    <th scope="col">數量</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(let c of cart){ %>
+                <tr data-sid="<%= c.sid %>">
+                    <td>
+                        <div class="btn btn-danger btn-sm" onclick="removeItem(<%= c.sid %>)">刪除</div>
+                    </td>
+                    <td>
+                        <img src="/img/product/product-img/<%= c.product_id %>.jpg" alt="...">
+                    </td>
+                    <td><%= c.product_name %></td>
+                    <td><%= c.price %></td>
+                    <td>
+                        <select class="form-control quantity quantity-<%= c.product_id %>" 
+                            data-val="<%= c.quantity %>"
+                            data-product_id="<%= c.product_id%>">
+                            <% for(let i=1; i<=10; i++){ %>
+                            <option value="<%= i %>"><%= i %></option>
+                            <% } %>
+                        </select>
+                    </td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+    <% } %>
+    </div>
+</div>
+
+
+<%- contentFor('js') %>
+<script>
+    const combo = $('.quantity');
+
+    // 把設定在 data-val 的值設定給 combobox
+    jQuery(function(){
+        combo.each(function(){
+            let quantity = $(this).data('val');
+            let product_id = $(this).data('product_id');
+            $(`.quantity-${product_id} span`).html(quantity);
+        });
+    });
+
+    combo.on('change', function(event){
+        const me = $(this);
+        const qty = me.val();
+        const pk = me.closest('tr').attr('data-sid');
+
+        $.post('/cart/add', {pk, qty}, function(data){
+            location.reload();
+        }, 'json');
+    });
+
+    function removeItem(pk){
+        $.post('/cart/remove',{pk},function(data){
+            location.reload();
+        },'json');
+    }
+
+</script>

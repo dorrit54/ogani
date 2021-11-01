@@ -1,0 +1,104 @@
+<%- contentFor('css') %>
+    <style>
+        .container_form {
+            padding-bottom: 50px;
+            padding-left: 300px;
+            padding-right: 300px;
+            padding-top: 50px;
+        }
+
+        .btn_d {
+            padding-bottom: 50px;
+            padding-top: 50px;
+            position:center;
+        }
+
+        .form-group {
+            padding-left: 300px;
+            padding-right: 300px;
+        }
+
+        .btn-primary {
+            padding-left: 500px;
+        }
+
+        .breadcrumb__text h2 {
+            font: 40 8vh comic sans ms;
+            color: #fee;
+            text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #44ff8c, 0 0 0.5em #44ff7c, 0 0 0.1em #44ffa8, 0 2px 2px rgb(5, 19, 11);
+        }
+
+        .breadcrumb__text h2 {
+            animation: blink linear infinite 2s;
+        }
+
+        .breadcrumb__text h2:nth-of-type(2) {
+            animation: blink linear infinite 3s;
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 0
+            }
+
+            49% {
+                opacity: 0
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        blink {
+            animation: blink 1s infinite;
+        }
+    </style>
+
+    <%- contentFor('body') %>
+        <section class="breadcrumb-section set-bg" data-setbg="img/background.png">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="breadcrumb__text">
+                            <h2>login</h2>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container_form">
+
+            <form name="form1" onsubmit="checkForm(); return false;">
+                <div class="form-group">
+                    <label for="account">帳號</label>
+                    <input type="text" class="form-control" id="account" name="account" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="btn_d">
+                    <button type="submit" class="btn btn-primary">登入</button>
+                </div>
+            </form>
+        </div>
+        </div>
+        </div>
+
+
+        <%- contentFor('js') %>
+            <script>
+                function checkForm() {
+                    $.post('', $(document.form1).serialize(), function (data) {
+                        console.log(data);
+                        if (data.success) {
+                            location.href = "/";
+                        } else {
+                            alert('帳號或密碼錯誤');
+                        }
+                    }, 'json');
+                }
+            </script>

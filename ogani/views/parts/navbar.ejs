@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="header__logo">
+                <a href="/"><img src="img/logo.png" alt=""></a>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <nav class="header__menu mr-auto">
+                <ul>
+                    <li><a href="/products">Shop</a></li>
+                    <!-- <li><a href="/favorites">favorites</a></li> -->
+                    
+                    
+                    <% if(session.admin){ %>
+                        <li class="nav-item active">
+                            <a class="nav-link"><%= session.admin.account %></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/logout">logout</a>
+                        </li>
+                    <% } else { %>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/logina">login</a>
+                        </li>
+                    <% } %> 
+                     
+                </ul>
+            </nav>
+        </div>
+        <div class="col-lg-3">
+            <div class="header__cart">
+                <ul>
+                    <li><a href="/cart"><i class="fa fa-shopping-bag"></i> </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="humberger__open">
+        <i class="fa fa-bars"></i>
+    </div>
+</div>
+</header>
